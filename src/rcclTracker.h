@@ -61,7 +61,7 @@ static suseconds_t get_host_timestamp() {
 //! @brief Debugging Tracer
 //! Prints API traces during destructor with duration timestamp.
 struct TracePrint_t {
-    TracePrint_t() {
+    TracePrint_t(std::string func) : func(func) {
         if ((RCCL_TRACE_RT & krccl_print_trace) == krccl_print_trace) {
             time = get_host_timestamp();
         }
@@ -71,15 +71,19 @@ struct TracePrint_t {
             int dev;
             hipGetDevice(&dev);
             time = get_host_timestamp();
-            std::cerr << "<<rccl-api: dur:" << (get_host_timestamp()-time)
+            std::cerr << "<<rccl-api:"
                       << " device:" << dev
+                      << " func:" << func
+                      << " ts:" << time
+                      << " dur:" << (get_host_timestamp()-time)
                       << " " << os.str() << std::endl;
         }
     }
+    std::string func;
     suseconds_t time;
     std::ostringstream os;
 };
-#define TRACE_PRINT TracePrint_t __t; __t.os << "func:" << __func__ << " "
+#define TRACE_PRINT TracePrint_t __t(__func__); __t.os << ""
 
 //! @brief Multi-GPU barrier
 //! Barrier structure is used to sync kernels from same rccl call across
