@@ -17,8 +17,6 @@ All rights reserved.
 #include "rcclBarrierKernels.h"
 #include "rcclScalarAllGatherKernels.h"
 
-extern int RCCL_TRACE_RT;
-
 //! @brief Definition of RcclInternalAllGather
 //! Once all gpus have setup their buffers, each gpu gathers rest
 //! of the data from other gpus.

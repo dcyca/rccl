@@ -18,8 +18,6 @@ All rights reserved.
 #include "rcclBarrierKernels.h"
 #include "rcclScalarAllReduceKernels.h"
 
-extern int RCCL_TRACE_RT;
-
 //! @brief Definition of RcclInternalAllReduce
 //! We split source and destination buffer into n chunks where n is number of
 //! gpus. Then, we assign each chunk to each gpu depending on the rank. For

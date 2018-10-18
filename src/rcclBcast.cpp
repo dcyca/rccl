@@ -25,8 +25,6 @@ All rights reserved.
 extern std::unordered_map<int, std::string> umap_red_op;
 extern std::unordered_map<int, std::string> umap_datatype;
 
-extern int RCCL_TRACE_RT;
-
 //! @brief Definition of rcclBcast
 rcclResult_t rcclBcast(void *buff, int count, rcclDataType_t datatype, int root,
                        rcclComm_t comm, hipStream_t stream) {

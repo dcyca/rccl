@@ -23,12 +23,16 @@ All rights reserved.
 
 extern std::unordered_map<int, std::string> umap_datatype;
 
-extern int RCCL_TRACE_RT;
-
 //! @brief Definition of rcclAllGather
 rcclResult_t rcclAllGather(const void *sendbuff, int count,
                            rcclDataType_t datatype, void *recvbuff,
                            rcclComm_t comm, hipStream_t stream) {
+    TRACE_PRINT << " sendbuff:" << sendbuff
+                << " count:" << count
+                << " datatype:" << umap_datatype[datatype]
+                << " recvbuff:" << recvbuff
+                << " comm:" << comm
+                << " stream:" << stream;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         int dev;
         hipGetDevice(&dev);

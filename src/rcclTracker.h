@@ -18,6 +18,8 @@ All rights reserved.
 #include <hip/hip_runtime.h>
 #include <atomic>
 #include <map>
+#include <time.h>
+#include <sys/time.h>
 #include "rcclCheck.h"
 
 #define KNRM "\x1B[0m"
@@ -39,11 +41,45 @@ constexpr int krccl_print_api = 1 << 0;
 constexpr int krccl_print_internal = 1 << 1;
 //! Enable debug log for printing kernel launches
 constexpr int krccl_print_kernel = 1 << 2;
+//! Enable debug log for printing trace info
+constexpr int krccl_print_trace = 1 << 3;
 
 //! Limit the total number of workitems launched to 1024
 constexpr unsigned knum_workitems = 1024;
 //! Limit the number of elements operated on per workgroup
 constexpr unsigned knum_vectors_per_workgroup = 1024;
+
+extern int RCCL_TRACE_RT;
+
+//! @brief Timestamp in microseconds.
+static suseconds_t get_host_timestamp() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec * 1e6 + tv.tv_usec;
+}
+
+//! @brief Debugging Tracer
+//! Prints API traces during destructor with duration timestamp.
+struct TracePrint_t {
+    TracePrint_t() {
+        if ((RCCL_TRACE_RT & krccl_print_trace) == krccl_print_trace) {
+            time = get_host_timestamp();
+        }
+    }
+    ~TracePrint_t() {
+        if ((RCCL_TRACE_RT & krccl_print_trace) == krccl_print_trace) {
+            int dev;
+            hipGetDevice(&dev);
+            time = get_host_timestamp();
+            std::cerr << "<<rccl-api: dur:" << (get_host_timestamp()-time)
+                      << " device:" << dev
+                      << " " << os.str() << std::endl;
+        }
+    }
+    suseconds_t time;
+    std::ostringstream os;
+};
+#define TRACE_PRINT TracePrint_t __t; __t.os << "func:" << __func__ << " "
 
 //! @brief Multi-GPU barrier
 //! Barrier structure is used to sync kernels from same rccl call across

@@ -17,8 +17,6 @@ All rights reserved.
 #include "rcclBarrierKernels.h"
 #include "rcclScalarReduceKernels.h"
 
-extern int RCCL_TRACE_RT;
-
 //! @brief Definition of RcclInternalReduce
 //! This function is launched on root gpus
 //! This function launches kernel on root gpu which gathers data from buffers on

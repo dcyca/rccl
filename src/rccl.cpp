@@ -92,6 +92,7 @@ const char *rcclGetErrorString(rcclResult_t result) {
 
 //! @brief Definition of rcclGetUniqueId
 rcclResult_t rcclGetUniqueId(rcclUniqueId *uniqueId) {
+    TRACE_PRINT << " uniqueId:" << uniqueId;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s uniqueId:%p%s\n", API_COLOR, __func__,
                 uniqueId, API_COLOR_END);
@@ -110,6 +111,10 @@ rcclResult_t rcclGetUniqueId(rcclUniqueId *uniqueId) {
 //! @brief Definition of rcclCommInitRank
 rcclResult_t rcclCommInitRank(rcclComm_t *comm, int ndev, rcclUniqueId commId,
                               int rank) {
+    TRACE_PRINT << " comm:" << comm
+                << " ndev:" << ndev
+                << " commId:" << commId
+                << " rank:" << rank;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr,
                 "%s<<rccl-api: %s comm:%p ndev:%d, commId:%p rank:%d%s\n",
@@ -159,6 +164,9 @@ rcclResult_t rcclCommInitRank(rcclComm_t *comm, int ndev, rcclUniqueId commId,
 
 //! @brief Definition of rcclCommInitAll
 rcclResult_t rcclCommInitAll(rcclComm_t *comm, int ndev, int *devlist) {
+    TRACE_PRINT << " comm:" << comm
+                << " ndev:" << ndev
+                << " devlist:" << devlist;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s comm:%p ndev:%d devlist:%p%s\n",
                 API_COLOR, __func__, comm, ndev, devlist, API_COLOR_END);
@@ -233,6 +241,7 @@ rcclResult_t rcclCommInitAll(rcclComm_t *comm, int ndev, int *devlist) {
 
 //! @brief Declaration of rcclCommCuDevice
 rcclResult_t rcclCommCuDevice(rcclComm_t comm, int *dev) {
+    TRACE_PRINT << " comm:" << comm;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s comm:%p *dev:%d dev:%p%s\n",
                 API_COLOR, __func__, comm, *dev, dev, API_COLOR_END);
@@ -246,6 +255,7 @@ rcclResult_t rcclCommCuDevice(rcclComm_t comm, int *dev) {
 
 //! @brief Declaration of rcclCommUserRank
 rcclResult_t rcclCommUserRank(rcclComm_t comm, int *rank) {
+    TRACE_PRINT << " comm:" << comm;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s comm:%p *rank:%d rank:%p%s\n",
                 API_COLOR, __func__, comm, *rank, rank, API_COLOR_END);
@@ -259,6 +269,7 @@ rcclResult_t rcclCommUserRank(rcclComm_t comm, int *rank) {
 
 //! @brief Declaration of rcclCommCount
 rcclResult_t rcclCommCount(rcclComm_t comm, int *count) {
+    TRACE_PRINT << " comm:" << comm;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s comm:%p *count:%d count:%p%s\n",
                 API_COLOR, __func__, comm, *count, count, API_COLOR_END);
@@ -272,6 +283,7 @@ rcclResult_t rcclCommCount(rcclComm_t comm, int *count) {
 
 //! @brief Declaration of rcclCommDestroy
 rcclResult_t rcclCommDestroy(rcclComm_t comm) {
+    TRACE_PRINT << " comm:" << comm;
     if ((RCCL_TRACE_RT & krccl_print_api) == krccl_print_api) {
         fprintf(stderr, "%s<<rccl-api: %s comm:%p%s\n", API_COLOR, __func__,
                 comm, API_COLOR_END);
