@@ -70,13 +70,19 @@ struct TracePrint_t {
         if ((RCCL_TRACE_RT & krccl_print_trace) == krccl_print_trace) {
             int dev;
             hipGetDevice(&dev);
-            time = get_host_timestamp();
+            suseconds_t time_diff = get_host_timestamp()-time;
+            if (time_diff == 0) time_diff = 1;
+#if 0
             std::cerr << "<<rccl-api:"
                       << " device:" << dev
                       << " func:" << func
                       << " ts:" << time
                       << " dur:" << (get_host_timestamp()-time)
                       << " " << os.str() << std::endl;
+#else
+            fprintf(stderr, "<<rccl-api: device:%d func:%s ts:%ld dur:%ld %s\n",
+		    dev, func.c_str(), time, time_diff, os.str().c_str());
+#endif
         }
     }
     std::string func;
